@@ -1,0 +1,22 @@
+# File sistem Windows
+desktop.ini
+Thumbs.db
+
+# File environment / credential
+.env
+.env.*
+!.env.example
+
+# Log
+*.log
+
+# Editor
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+
+# Temporary files
+*.tmp
+*.temp

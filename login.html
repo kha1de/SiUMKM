@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SiUMKM — Masuk</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        "neo-primary": "#ffe500",
+                        "neo-black": "#000000"
+                    },
+                    fontFamily: { sans: ["Space Grotesk", "sans-serif"] }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { 
+            font-family: 'Space Grotesk', sans-serif; 
+            background: linear-gradient(135deg, #ffffff 0%, #f3f3f4 100%);
+            min-height: 100vh;
+        }
+
+        .material-symbols-outlined { 
+            font-variation-settings: 'FILL' 1, 'wght' 700, 'GRAD' 0, 'opsz' 20; 
+            vertical-align: middle; 
+        }
+        
+        .neo-card {
+            background: white;
+            border: 3px solid #000;
+            box-shadow: 10px 10px 0px #000;
+            position: relative;
+        }
+
+        .input-group {
+            position: relative;
+            display: flex;
+            align-items: stretch;
+            border: 2px solid #000;
+            background: white;
+            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .input-group:focus-within {
+            transform: translate(-2px, -2px);
+            box-shadow: 4px 4px 0px #ffe500;
+        }
+        
+        .input-icon-box {
+            width: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #000;
+            color: #ffe500;
+            border-right: 2px solid #000;
+        }
+
+        .neo-input {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            border: none;
+            font-weight: 800;
+            font-size: 0.85rem;
+            outline: none;
+            width: 100%;
+            background: transparent;
+        }
+        .neo-input::placeholder { color: #bbb; font-weight: 500; }
+
+        .neo-btn {
+            background: #ffe500;
+            border: 3px solid #000;
+            padding: 1rem;
+            font-size: 0.9rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            box-shadow: 6px 6px 0px #000;
+            transition: all 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            width: 100%;
+        }
+        .neo-btn:hover {
+            transform: translate(-3px, -3px);
+            box-shadow: 9px 9px 0px #000;
+        }
+        .neo-btn:active {
+            transform: translate(1px, 1px);
+            box-shadow: 2px 2px 0px #000;
+        }
+
+        @keyframes popIn {
+            from { opacity: 0; transform: scale(0.95) translateY(10px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        .animate-pop { animation: popIn 0.5s cubic-bezier(0.23, 1, 0.32, 1) forwards; }
+
+        .logo-box {
+            position: relative;
+            width: 64px;
+            height: 64px;
+        }
+        .logo-shape {
+            position: absolute;
+            inset: 0;
+            background: #ffe500;
+            border: 3px solid #000;
+            box-shadow: 4px 4px 0px #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform: rotate(-3deg);
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center p-6 text-[#1a1c1c]">
+    <div class="w-full max-w-[360px] flex flex-col gap-8 animate-pop">
+        <!-- Branding -->
+        <div class="flex flex-col items-center">
+            <div class="logo-box mb-4">
+                <div class="logo-shape">
+                    <span class="material-symbols-outlined text-3xl text-black">storefront</span>
+                </div>
+                <div class="absolute -bottom-1 -right-1 w-6 h-6 bg-black text-white flex items-center justify-center border-2 border-white rotate-12">
+                    <span class="material-symbols-outlined text-xs">check_circle</span>
+                </div>
+            </div>
+            <h2 id="brandTitle" class="text-4xl font-black uppercase tracking-tighter italic mb-1 text-black">SiUMKM</h2>
+            <div class="flex items-center gap-2">
+                <span class="w-8 h-[2px] bg-black"></span>
+                <p class="text-[9px] font-black uppercase tracking-[0.3em] text-[#5e5e5e]">Professional POS Solution</p>
+                <span class="w-8 h-[2px] bg-black"></span>
+            </div>
+        </div>
+
+        <!-- Login Card -->
+        <main class="neo-card p-8">
+            <div class="mb-8 text-center">
+                <h1 class="text-xl font-black uppercase tracking-tight mb-1">Selamat Datang</h1>
+                <p class="text-[9px] font-bold text-[#a1a1a1] uppercase tracking-widest">Akses Akun Anda</p>
+            </div>
+            
+            <form class="flex flex-col gap-5" onsubmit="doLogin(event)">
+                <div class="flex flex-col gap-1.5">
+                    <label class="text-[9px] font-black uppercase tracking-widest text-[#5e5e5e]" for="email">Email Address</label>
+                    <div class="input-group">
+                        <div class="input-icon-box">
+                            <span class="material-symbols-outlined text-xl">person</span>
+                        </div>
+                        <input id="email" type="email" placeholder="admin@siumkm.com" required class="neo-input"/>
+                    </div>
+                </div>
+                
+                <div class="flex flex-col gap-1.5">
+                    <label class="text-[9px] font-black uppercase tracking-widest text-[#5e5e5e]" for="password">Password</label>
+                    <div class="input-group">
+                        <div class="input-icon-box">
+                            <span class="material-symbols-outlined text-xl">lock</span>
+                        </div>
+                        <input id="password" type="password" placeholder="••••••••" required class="neo-input"/>
+                    </div>
+                </div>
+                
+                <div id="loginError" class="hidden border-[3px] border-black bg-[#FF3B30] text-white p-3 text-[10px] font-black uppercase tracking-wider shadow-[3px_3px_0px_#000]"></div>
+                
+                <button id="loginBtn" type="submit" class="neo-btn mt-2">
+                    <span>Masuk Dashboard</span>
+                    <span class="material-symbols-outlined">arrow_right_alt</span>
+                </button>
+            </form>
+            
+            <div class="mt-10 pt-6 border-t-2 border-dashed border-black/10 flex flex-col items-center gap-3">
+                <p class="text-[8px] font-black uppercase tracking-[0.2em] text-[#a1a1a1]">Kredensial Akses</p>
+                <div class="bg-gray-50 border-2 border-black/5 px-4 py-2 text-[10px] font-bold text-[#5e5e5e] italic">
+                    admin@siumkm.com | admin123
+                </div>
+            </div>
+        </main>
+
+        <footer class="text-center">
+            <p class="text-[9px] font-black uppercase tracking-[0.4em] text-[#a1a1a1] opacity-50">
+                SiUMKM Indonesia &copy; 2024
+            </p>
+        </footer>
+    </div>
+    
+    <script src="js/login.js"></script>
+    <script>
+        fetch('api/settings.php')
+            .then(r => r.json())
+            .then(res => {
+                if (res?.success && res.data) {
+                    const nama = res.data.nama_toko || 'SiUMKM';
+                    const elTitle = document.getElementById('brandTitle');
+                    if(elTitle) elTitle.textContent = nama;
+                    document.title = nama + ' — Login';
+                }
+            }).catch(e => console.error(e));
+    </script>
+</body>
+</html>

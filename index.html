@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SiUMKM — Dashboard</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        "primary-container": "#ffe500",
+                        "primary-fixed": "#fee400",
+                        "primary-fixed-dim": "#dec800",
+                        "on-primary-fixed": "#201c00",
+                        "on-primary-container": "#726600",
+                        "on-primary-fixed-variant": "#504700",
+                        "surface-container": "#eeeeee",
+                        "surface-container-low": "#f3f3f4",
+                        "surface-container-high": "#e8e8e8",
+                        "surface-container-highest": "#e2e2e2",
+                        "surface-container-lowest": "#ffffff",
+                        "surface": "#f9f9f9",
+                        "background": "#f9f9f9",
+                        "on-surface": "#1a1c1c",
+                        "on-surface-variant": "#4b4731",
+                        "on-background": "#1a1c1c",
+                        "secondary": "#5e5e5e",
+                        "secondary-fixed": "#e2e2e2",
+                        "secondary-fixed-dim": "#c6c6c6",
+                        "primary": "#6a5f00",
+                        "tertiary": "#c0000a",
+                        "tertiary-container": "#ffdcd7",
+                        "on-tertiary-container": "#cb0c10",
+                        "on-tertiary-fixed": "#410001",
+                        "error": "#ba1a1a",
+                    },
+                    fontFamily: { sans: ["Space Grotesk", "sans-serif"] }
+                }
+            }
+        }
+    </script>
+    <style>
+        :root {
+            --neo-black: #000000;
+            --neo-white: #ffffff;
+            --neo-primary: #ffe500;
+            --neo-primary-dim: #dec800;
+            --neo-bg: #f9f9f9;
+            --neo-border: 3px;
+            --neo-shadow: 6px;
+            --neo-shadow-sm: 3px;
+        }
+
+        body { 
+            font-family: 'Space Grotesk', sans-serif; 
+            background-color: var(--neo-bg); 
+            color: #1a1c1c; 
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .material-symbols-outlined { 
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; 
+            vertical-align: middle;
+        }
+        
+        /* Global Neo-Brutalist Utilities */
+        .neo-border { border: var(--neo-border) solid var(--neo-black); }
+        .neo-shadow { box-shadow: var(--neo-shadow) var(--neo-shadow) 0px var(--neo-black); }
+        .neo-shadow-sm { box-shadow: var(--neo-shadow-sm) var(--neo-shadow-sm) 0px var(--neo-black); }
+        .neo-shadow-lg { box-shadow: 10px 10px 0px var(--neo-black); }
+        
+        .neo-hover { transition: all 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .neo-hover:hover { transform: translate(-2px, -2px); box-shadow: 8px 8px 0px var(--neo-black); }
+        .neo-hover:active { transform: translate(1px, 1px); box-shadow: 2px 2px 0px var(--neo-black); }
+
+        /* Navigation */
+        .nav-active { 
+            background-color: var(--neo-primary) !important; 
+            color: var(--neo-black) !important; 
+            font-weight: 800; 
+            border: var(--neo-border) solid var(--neo-black) !important; 
+            box-shadow: var(--neo-shadow-sm) var(--neo-shadow-sm) 0px var(--neo-black); 
+            transform: translate(-2px, -2px); 
+        }
+        .nav-inactive { color: #a1a1a1; border: var(--neo-border) solid transparent; }
+        .nav-inactive:hover { 
+            color: var(--neo-primary); 
+            background-color: rgba(255,229,0,0.05); 
+            border-color: var(--neo-black); 
+        }
+
+        /* Component Classes for JS Pages */
+        .pg-page-title { font-size: 2.25rem; font-weight: 900; text-transform: uppercase; font-style: italic; letter-spacing: -0.02em; margin-bottom: 0.5rem; line-height: 1; }
+        .pg-page-sub { font-size: 0.875rem; font-weight: 600; color: #5e5e5e; margin-bottom: 2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+
+        .pg-section { 
+            background: white; 
+            border: var(--neo-border) solid var(--neo-black); 
+            box-shadow: var(--neo-shadow) var(--neo-shadow) 0px var(--neo-black); 
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        .pg-section-head { 
+            padding: 1.25rem 1.5rem; 
+            border-bottom: var(--neo-border) solid var(--neo-black); 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+            background: #fdfdfd;
+        }
+        .pg-section-title { font-size: 1rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.05em; }
+        .pg-section-body { padding: 1.5rem; }
+
+        .page-btn { 
+            display: inline-flex; align-items: center; gap: 0.5rem; 
+            border: var(--neo-border) solid var(--neo-black); 
+            font-weight: 800; cursor: pointer; 
+            transition: all 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            text-transform: uppercase; 
+            font-family: 'Space Grotesk', sans-serif;
+            padding: 0.75rem 1.5rem;
+            font-size: 0.875rem;
+        }
+        .page-btn:hover { transform: translate(-3px, -3px); box-shadow: 6px 6px 0px var(--neo-black); }
+        .page-btn:active { transform: translate(1px, 1px); box-shadow: 2px 2px 0px var(--neo-black); }
+        
+        .page-btn-primary { background: var(--neo-primary); color: var(--neo-black); }
+        .page-btn-danger { background: #FF3B30; color: white; }
+        .page-btn-outline { background: white; color: var(--neo-black); }
+        .page-btn-sm { padding: 0.5rem 1rem; font-size: 0.75rem; border-width: 2px; }
+
+        .page-table { width: 100%; border-collapse: collapse; }
+        .page-table thead tr { background: var(--neo-black); color: var(--neo-white); }
+        .page-table th { padding: 1rem; text-align: left; font-size: 0.7rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.1em; }
+        .page-table td { padding: 1rem; border-bottom: 2px solid #eee; font-weight: 600; font-size: 0.875rem; }
+        .page-table tbody tr:hover { background: rgba(255,229,0,0.05); }
+        .page-table tbody tr:last-child td { border-bottom: none; }
+
+        .page-input { 
+            width: 100%; padding: 0.875rem 1.25rem; 
+            border: var(--neo-border) solid var(--neo-black); 
+            font-family: 'Space Grotesk', sans-serif; 
+            font-size: 0.875rem; font-weight: 600; 
+            background: white; outline: none;
+            transition: all 0.2s;
+        }
+        .page-input:focus { box-shadow: 4px 4px 0px var(--neo-black); transform: translate(-2px, -2px); }
+        .page-label { display: block; font-size: 0.7rem; font-weight: 900; text-transform: uppercase; margin-bottom: 0.5rem; letter-spacing: 0.05em; color: #5e5e5e; }
+
+        .page-badge { 
+            display: inline-block; border: 2px solid var(--neo-black); 
+            padding: 0.25rem 0.75rem; font-size: 0.65rem; font-weight: 900; 
+            text-transform: uppercase; box-shadow: 2px 2px 0px var(--neo-black); 
+        }
+        .page-badge-green { background: #4ADE80; }
+        .page-badge-red { background: #FB7185; }
+        .page-badge-yellow { background: var(--neo-primary); }
+        .page-badge-blue { background: #60A5FA; }
+
+        /* Layout Helpers */
+        .pg-grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+        .pg-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+        .pg-grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+        .pg-grid-84 { display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; }
+
+        .pg-kpi { 
+            background: white; border: var(--neo-border) solid var(--neo-black); 
+            padding: 1.5rem; box-shadow: var(--neo-shadow) var(--neo-shadow) 0px var(--neo-black); 
+            transition: transform 0.2s;
+        }
+        .pg-kpi:hover { transform: translateY(-4px); }
+        .pg-kpi-label { font-size: 0.7rem; font-weight: 900; text-transform: uppercase; color: #5e5e5e; margin-bottom: 0.5rem; }
+        .pg-kpi-val { font-size: 2rem; font-weight: 900; line-height: 1; margin-bottom: 0.25rem; }
+        .pg-kpi-sub { font-size: 0.75rem; font-weight: 700; }
+        
+        .pg-mb { margin-bottom: 2rem; }
+        .pg-flex-between { display: flex; justify-content: space-between; align-items: center; }
+        .pg-flex { display: flex; gap: 1rem; }
+        
+        .hidden { display: none !important; }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: var(--neo-black); border: 2px solid #f1f1f1; }
+        ::-webkit-scrollbar-thumb:hover { background: #333; }
+
+        /* Animations */
+        @keyframes slideInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-up { animation: slideInUp 0.4s ease-out forwards; }
+    </style>
+</head>
+<body class="bg-[#f9f9f9] text-[#1a1c1c]">
+
+<!-- Sidebar -->
+<aside class="fixed left-0 top-0 h-screen w-[280px] border-r-4 border-black bg-black flex flex-col p-6 z-50 transition-transform duration-300" id="sidebar">
+    <div class="mb-10 flex flex-col items-center">
+        <div class="w-16 h-16 bg-[var(--neo-primary)] border-4 border-black flex items-center justify-center shadow-[4px_4px_0px_#fff] mb-4 -rotate-3 hover:rotate-0 transition-transform cursor-pointer">
+             <span class="material-symbols-outlined text-4xl text-black font-black">storefront</span>
+        </div>
+        <h1 id="sidebarLogo" class="text-3xl font-black text-[var(--neo-primary)] uppercase tracking-tighter leading-none italic">SiUMKM</h1>
+        <div class="mt-2 bg-white text-black text-[10px] font-black px-2 py-0.5 uppercase tracking-widest border-2 border-black">Pro Edition</div>
+    </div>
+    
+    <nav class="flex-1 flex flex-col gap-2 overflow-y-auto pr-2 custom-scroll">
+        <a href="#" class="nav-item nav-active flex items-center gap-4 p-4 transition-all group" data-page="dashboard">
+            <span class="material-symbols-outlined group-hover:scale-110 transition-transform">grid_view</span>
+            <span class="font-black uppercase text-xs tracking-wider">Beranda</span>
+        </a>
+        <a href="#" class="nav-item nav-inactive flex items-center gap-4 p-4 transition-all group" data-page="pos">
+            <span class="material-symbols-outlined group-hover:scale-110 transition-transform">point_of_sale</span>
+            <span class="font-black uppercase text-xs tracking-wider">Kasir POS</span>
+        </a>
+        <a href="#" class="nav-item nav-inactive flex items-center gap-4 p-4 transition-all group" data-page="produk">
+            <span class="material-symbols-outlined group-hover:scale-110 transition-transform">inventory_2</span>
+            <span class="font-black uppercase text-xs tracking-wider">Stok Produk</span>
+        </a>
+        <a href="#" class="nav-item nav-inactive flex items-center gap-4 p-4 transition-all group" data-page="transaksi">
+            <span class="material-symbols-outlined group-hover:scale-110 transition-transform">history</span>
+            <span class="font-black uppercase text-xs tracking-wider">Riwayat</span>
+        </a>
+        <a href="#" class="nav-item nav-inactive flex items-center gap-4 p-4 transition-all group" data-page="member">
+            <span class="material-symbols-outlined group-hover:scale-110 transition-transform">groups</span>
+            <span class="font-black uppercase text-xs tracking-wider">Pelanggan</span>
+        </a>
+        <a href="#" class="nav-item nav-inactive flex items-center gap-4 p-4 transition-all group" data-page="laporan">
+            <span class="material-symbols-outlined group-hover:scale-110 transition-transform">monitoring</span>
+            <span class="font-black uppercase text-xs tracking-wider">Laporan</span>
+        </a>
+        <a href="#" class="nav-item nav-inactive flex items-center gap-4 p-4 transition-all group" data-page="ai">
+            <span class="material-symbols-outlined group-hover:scale-110 transition-transform text-[#ffe500]">magic_button</span>
+            <span class="font-black uppercase text-xs tracking-wider">AI Business</span>
+        </a>
+        <div class="mt-4 pt-4 border-t border-white/20">
+            <a href="#" class="nav-item nav-inactive flex items-center gap-4 p-4 transition-all group" data-page="settings">
+                <span class="material-symbols-outlined group-hover:rotate-90 transition-transform">settings</span>
+                <span class="font-black uppercase text-xs tracking-wider">Setelan Toko</span>
+            </a>
+        </div>
+    </nav>
+    
+    <div class="mt-auto pt-6">
+        <div class="flex items-center gap-3 mb-6 p-3 bg-[#1a1c1c] border-2 border-white/10 hover:border-[#ffe500] transition-colors cursor-default">
+            <div class="w-10 h-10 border-2 border-[#ffe500] bg-[#ffe500] flex items-center justify-center font-black text-black text-lg" id="userAvatar">A</div>
+            <div class="overflow-hidden">
+                <p class="text-xs font-black text-white truncate" id="userName">Admin</p>
+                <p class="text-[9px] text-[#dec800] font-black uppercase tracking-widest opacity-70" id="userRole">Owner</p>
+            </div>
+        </div>
+        <button onclick="logout()"
+            class="w-full bg-[#FF3B30] text-white border-3 border-black font-black uppercase py-3 text-xs neo-shadow-sm hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all">
+            LOGOUT SYSTEM
+        </button>
+    </div>
+</aside>
+
+<!-- Topbar -->
+<header class="fixed top-0 right-0 h-24 border-b-4 border-black bg-white flex justify-between items-center px-10 ml-[280px] w-[calc(100%-280px)] z-40">
+    <div class="flex flex-col">
+        <h2 class="text-4xl font-black uppercase italic tracking-tighter text-black leading-none" id="pageTitle">Dashboard</h2>
+        <div class="flex items-center gap-2 mt-1">
+            <span class="w-2 h-2 bg-[var(--neo-primary)] border border-black"></span>
+            <p class="text-[9px] font-black text-[#a1a1a1] uppercase tracking-[0.3em]">SiUMKM Core / <span id="breadcrumb" class="text-black">Dasbor</span></p>
+        </div>
+    </div>
+    
+    <div class="flex items-center gap-6">
+        <!-- Live Clock -->
+        <div class="hidden xl:flex items-center gap-3 border-3 border-black px-5 py-2 bg-black text-white font-black text-xs tracking-widest">
+            <span class="material-symbols-outlined text-lg text-[var(--neo-primary)]">timer</span>
+            <span id="liveTime">00:00:00</span>
+        </div>
+
+        <!-- Notif Bell -->
+        <div class="relative">
+            <button onclick="toggleNotif()" class="relative w-12 h-12 flex items-center justify-center border-3 border-black bg-white neo-shadow-sm hover:bg-[var(--neo-primary)] transition-all group">
+                <span class="material-symbols-outlined group-hover:rotate-12 transition-transform">notifications</span>
+                <span id="notifCount" class="hidden absolute -top-1 -right-1 w-5 h-5 bg-[#FF3B30] text-white text-[9px] font-black flex items-center justify-center border-2 border-black rounded-full">0</span>
+            </button>
+            <div id="notifDropdown" class="hidden absolute top-16 right-0 w-80 bg-white border-4 border-black z-50 neo-shadow-lg animate-up">
+                <div class="p-4 border-b-4 border-black bg-black text-[var(--neo-primary)] font-black text-xs uppercase tracking-widest flex justify-between">
+                    <span>Notifikasi</span>
+                    <span class="bg-[#FF3B30] text-white px-1 text-[8px]">Live</span>
+                </div>
+                <div id="notifList" class="max-h-80 overflow-y-auto">
+                    <p class="p-8 text-[10px] text-[#a1a1a1] font-black text-center uppercase tracking-widest">Belum ada notifikasi baru</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- User Profile Quick Link -->
+        <div class="flex items-center gap-3 border-3 border-black p-1.5 bg-black hover:bg-[var(--neo-primary)] group transition-all cursor-pointer neo-shadow-sm">
+            <div class="w-9 h-9 bg-white border-2 border-black flex items-center justify-center">
+                 <span class="material-symbols-outlined text-2xl text-black font-black">person</span>
+            </div>
+            <span class="material-symbols-outlined text-white group-hover:text-black transition-colors">menu</span>
+        </div>
+    </div>
+</header>
+
+
+<!-- Main Content -->
+<main style="margin-left:280px;margin-top:96px;min-height:calc(100vh - 96px);padding:40px;background:#f9f9f9" id="pageContent">
+    <div class="flex flex-col items-center justify-center h-full gap-4 opacity-50 py-20">
+        <div class="w-12 h-12 border-4 border-black border-t-transparent rounded-full animate-spin"></div>
+        <p class="font-black uppercase tracking-widest text-sm">Menyiapkan Ruang Kerja...</p>
+    </div>
+</main>
+
+<script src="js/api.js"></script>
+<script src="js/pages/dashboard.js"></script>
+<script src="js/pages/pos.js"></script>
+<script src="js/pages/produk.js"></script>
+<script src="js/pages/transaksi.js"></script>
+<script src="js/pages/member.js"></script>
+<script src="js/pages/laporan.js"></script>
+<script src="js/pages/ai.js"></script>
+<script src="js/pages/settings.js"></script>
+<script src="js/app.js"></script>
+<script>
+    // Live Clock
+    setInterval(() => {
+        const now = new Date();
+        document.getElementById('liveTime').textContent = now.toLocaleTimeString('id-ID');
+    }, 1000);
+
+    // Fetch global settings
+    api.get('/settings').then(res => {
+        if (res?.success && res.data) {
+            const nama = res.data.nama_toko || 'SiUMKM';
+            const logo = document.getElementById('sidebarLogo');
+            if(logo) logo.textContent = nama;
+            document.title = nama + ' — Premium Dashboard';
+            window.appSettings = res.data;
+        }
+    });
+
+    // Update breadcrumb on navigate
+    const originalNavigate = window.navigate;
+    window.navigate = function(page) {
+        if (originalNavigate) originalNavigate(page);
+        const pageObj = window.pages[page];
+        if (pageObj) {
+            document.getElementById('breadcrumb').textContent = pageObj.title;
+        }
+    };
+</script>
+</body>
+</html>
