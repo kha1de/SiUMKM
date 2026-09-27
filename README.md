@@ -131,7 +131,7 @@ SiUMKM/
 │   ├── member.php          # GET/POST/PUT/DELETE — data member
 │   ├── laporan.php         # GET   — laporan keuangan & grafik
 │   ├── settings.php        # GET/PUT — pengaturan toko
-│   ├── upload.php          # POST  — upload gambar QRIS
+│   ├── upload.php          # POST  — upload gambar produk
 │   └── migration.php       # Script migrasi database (jalankan sekali)
 │
 ├── css/
@@ -151,8 +151,8 @@ SiUMKM/
 │       ├── ai.js           # Render halaman AI Rekomendasi
 │       └── settings.js     # Render halaman Pengaturan Toko
 │
-└── uploads/                # Direktori penyimpanan gambar upload (QRIS)
-    └── qris_*.jpg/jpeg     # File gambar QRIS yang telah diupload
+└── uploads/                # Direktori penyimpanan gambar produk yang di-upload
+    └── produk_*.jpg/jpeg   # File gambar produk yang telah di-upload
 ```
 
 ---
@@ -451,14 +451,14 @@ Semua endpoint berada di folder `/api/` dan mengembalikan respons **JSON**.
 | `DELETE` | `/api/member.php?id={id}` | Hapus member |
 | `GET` | `/api/settings.php` | Ambil pengaturan toko |
 | `PUT` | `/api/settings.php` | Simpan pengaturan toko |
-| `POST` | `/api/upload.php` | Upload gambar QRIS |
+| `POST` | `/api/upload.php` | Upload gambar produk |
 | `GET` | `/api/migration.php` | Jalankan migrasi database |
 
 ---
 
 ## 📝 Catatan Tambahan
 
-- **Upload file**: Hanya mendukung `JPG`, `JPEG`, dan `PNG`. File disimpan di `uploads/` dengan nama `qris_{timestamp}.ext`.
+- **Upload file**: Hanya mendukung `JPG`, `JPEG`, dan `PNG`. File disimpan di `uploads/` dengan nama `produk_{timestamp}.ext`.
 - **Cetak struk**: Menggunakan `window.print()` browser — tidak memerlukan printer termal khusus.
 - **Token autentikasi**: Menggunakan `md5(email + timestamp)`, bersifat stateless, tidak disimpan di database. Cocok untuk penggunaan lokal/single-user.
 - **Grafik laporan**: Dibuat menggunakan HTML/CSS murni tanpa library charting eksternal.

@@ -164,6 +164,7 @@ async function uploadQris() {
     if (!file) return;
     const formData = new FormData();
     formData.append('image', file);
+    formData.append('type', 'qris');
     
     const res = await fetch('/api/upload.php', { method: 'POST', body: formData });
     const data = await res.json();

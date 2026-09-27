@@ -24,7 +24,13 @@ if (!in_array($imageFileType, $validExtensions)) {
     die(json_encode(["success" => false, "message" => "Hanya JPG, JPEG, dan PNG yang diperbolehkan"]));
 }
 
-$newFileName = "qris_" . time() . "." . $imageFileType;
+// Penamaan file upload (default: produk_<timestamp>.<ext>)
+$prefix = "produk";
+if (isset($_POST['type']) && $_POST['type'] === 'qris') {
+    $prefix = "qris";
+}
+
+$newFileName = $prefix . "_" . time() . "." . $imageFileType;
 $targetFile = $targetDir . $newFileName;
 
 if (move_uploaded_file($file["tmp_name"], $targetFile)) {

@@ -276,6 +276,7 @@ async function saveProduk() {
     if (fileInput.files && fileInput.files[0]) {
         const formData = new FormData();
         formData.append('image', fileInput.files[0]);
+        formData.append('type', 'produk');
         
         try {
             const upRes = await fetch('/api/upload.php', { method: 'POST', body: formData });
